@@ -3,7 +3,7 @@
 
 
 # Overview
-This file contains a detailed guide on how I setup an ArchLinux system from scratch (literally). This guide covers the initial Arch installation all the way to the final result: a fully customized, functional system. This guide shows the process I follow to build my Hyprland WM system, my way. Before anything, I'll ask whoever is reading this to have some grade of skepticism about what's written here, not because it's wrong (somethings surely are since this is the second window manager I try) but mainly because of the nature of Arch itself, don't forget to check the [ArchWiki](https://wiki.archlinux.org/title/Main_page) :)
+This file contains a detailed guide on how I setup an ArchLinux system from scratch (literally). This guide covers the initial Arch installation all the way to the final result: a fully customized, functional system. This guide shows the process I follow to build my Hyprland WM system, my way. Before anything, I'll ask whoever is reading this to have some grade of skepticism about what's written here, not because it's wrong (somethings surely are since this is the second window manager I try) but mainly because of the nature of Arch itself, don't forget to check the [**ArchWiki**](https://wiki.archlinux.org/title/Main_page) :)
 
 # Arch Installation
 ## Environment Setup (Pre-installation)
@@ -38,7 +38,7 @@ A LAN cable is the easiest way to get network access but in case that is not pos
 [iwd]# station <dev_name> disconnect
 ```
 
-If it happens that there's connection but not internet access, a DHCP client will most likely be needed, in this case, using [dhcpcd](https://wiki.archlinux.org/title/Dhcpcd):
+If it happens that there's connection but not internet access, a DHCP client will most likely be needed, in this case, using [**dhcpcd**](https://wiki.archlinux.org/title/Dhcpcd):
 
 ```
 # dhcpcd <dev_name>
@@ -386,7 +386,7 @@ Some clients are known for being a massive pain under Wayland. Here are some rep
 
 [**Webcord**](https://github.com/SpacingBat3/WebCord) (Discord)
 
-Might be started by window manager or desktop environment on startup/loginwith `webcord --start-minimized` (who would want that anyway?).
+Might be started by window manager or desktop environment on startup/login with `webcord --start-minimized` (who would want that anyway?).
 
 ```
 $ yay -S webcord
