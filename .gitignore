@@ -4,4 +4,5 @@
 !.gitmodules
 
 # Except for the files and folders we want to track
+!README.md
 !.config
