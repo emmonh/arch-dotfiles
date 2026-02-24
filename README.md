@@ -3,31 +3,31 @@
 
 
 # Overview
-This file contains a detailed guide on how I setup an ArchLinux system from scratch (literally). This guide convers the initial Arch installation all the way to the final result: a fully customized, functional system. This guide shows the process I follow to build my Hyprland WM system, my way. Before anything, I'll ask whoever is reading this to have some grade of skepticism about what's written here, not because it's wrong (somethings surely are since this is the second window manager I try) but mainly because of the nature of Arch itself, don't forget to check the [ArchWiki](https://wiki.archlinux.org/title/Main_page) :)
+This file contains a detailed guide on how I setup an ArchLinux system from scratch (literally). This guide covers the initial Arch installation all the way to the final result: a fully customized, functional system. This guide shows the process I follow to build my Hyprland WM system, my way. Before anything, I'll ask whoever is reading this to have some grade of skepticism about what's written here, not because it's wrong (somethings surely are since this is the second window manager I try) but mainly because of the nature of Arch itself, don't forget to check the [ArchWiki](https://wiki.archlinux.org/title/Main_page) :)
 
 # Arch Installation
 ## Environment Setup (Pre-installation)
 
 ### Installation Media and Live Environment
-I assume the installation media already exists and the boot into the live enviroment was succesfull.
+I assume the installation media already exists and the boot into the live enviroment was successful.
 
 ### Keyboard Layout
 Default keyboard layout is `us`, Available layouts can be listed with
 
-```bash
+```
 # localectl list-keymaps
 ```
 
 To set the keyboard layout run
 
-```bash
+```
 # loadkeys <keys>
 ```
 
 ### Internet Connection
 A LAN cable is the easiest way to get network access but in case that is not possible, [**iwctl**](https://wiki.archlinux.org/title/Iwd#iwctl) can be used:
 
-```bash
+```
 [iwd]# device list
 [iwd]# device <dev_name> show
 [iwd]# device <dev_name> set-property Powered on        # In case the device is powered off
@@ -40,14 +40,14 @@ A LAN cable is the easiest way to get network access but in case that is not pos
 
 If it happens that there's connection but not internet access, a DHCP client will most likely be needed, in this case, using [dhcpcd](https://wiki.archlinux.org/title/Dhcpcd):
 
-```bash
+```
 # dhcpcd <dev_name>
 # ping arch.org      # Test connection
 ```
 
 If got a timed-out error try
 
-```bash
+```
 # ip a               # List network interfaces
 # systemctl status dhcpcd@<dev_name>
 # journalctl -xn
@@ -57,7 +57,7 @@ If got a timed-out error try
 # ping arch.org      # Test connection
 ```
 
-### Particiones del disco
+### Disk Partitions
 
 Basic installation requires **three partitions**:
 
@@ -69,7 +69,7 @@ Basic installation requires **three partitions**:
 
 ### Formating the Partitions
 
-```bash
+```
 # mkfs.fat -F 32 <boot_part>
 # swapon <swap_part>
 # mkfs.ext4 <root_part>
@@ -77,7 +77,7 @@ Basic installation requires **three partitions**:
 
 ### Mount Partitions in File System
 
-```bash
+```
 # mount <boot_part> /mnt/boot/efi
 # swapon <swap_part>
 # mount <root_part> /mnt
@@ -89,23 +89,23 @@ Basic installation requires **three partitions**:
 
 Mirrors can be choosen in `/etc/pacman.d/mirrorlist`. It is recommended to check the date with `timedatectl` and upload the `keyring` as well to avoid signature problems
 
-```bash
+```
 # timedatectl
 # pacman -Sy archlinux-keyring
 ```
 
 In the rare case there's still signature problems, but you need a system somehow, you can try setting `SigLevel = TrustAll` in `/etc/pacman.conf`. After installation, check that `SigLevel` is not in `TrustAll` anymore because of **security**.
 
-To install the programs, `pacstrap` is used. Here's the complete command I run to install the system and all my "must have" software (this "must have" software is that one needed in order to make the system able to do the more basic and fundamental stuff a computer should do): 
+To install the programs, `pacstrap` is used. Here's the complete command I run to install the system and all my "must have" software (this "must have" software is that one needed in order to make the system able to do the most basic and fundamental stuff I believe a computer should do): 
 
-```bash
+```
 # pacstrap -K /mnt base base linux linux-firmware dbus polkit udisks2 neovim vim base-devel iwd impala git grub efibootmgr <amd/intel>-ucode sof-firmware pacman-contrib
 ``` 
 
 ## System Configuration
 ### fstab
 
-```bash
+```
 genfstab -U /mnt > /mnt/etc/fstab
 ``` 
 
@@ -113,14 +113,14 @@ genfstab -U /mnt > /mnt/etc/fstab
 
 ### Enter the newly installed system
 
-```bash
+```
 # arch-chroot /mnt
 ```
 
 ### Time Zone
 
-```bash
-# ln -sf /usr/share/zoneinfo/<Región>/<Ciudad> /etc/localtime
+```
+# ln -sf /usr/share/zoneinfo/<Region>/<City> /etc/localtime
 # hwclock --systohc
 ```
 
@@ -129,7 +129,7 @@ genfstab -U /mnt > /mnt/etc/fstab
 ### Localization
 Uncomment `en_US.UTF-8 UTF-8` in `/etc/locale.gen` and then run
 
-```bash
+```
 # locale-gen
 ```
 
@@ -143,14 +143,14 @@ Set hostname in `/etc/hostname`.
 
 ### Root password
 
-```bash
+```
 # passwd
 ```
 
 ### Sudoers file
 Edit the sudoers file with your editor via
 
-```bash
+```
 # EDITOR=<editor> visudo
 ```
 
@@ -162,7 +162,7 @@ Uncomment the line containing
 
 ### Create users
 
-```bash
+```
 # useradd -m -G wheel -s /bin/bash <user>
 # passwd <user>
 ```
@@ -170,10 +170,12 @@ Uncomment the line containing
 Note that the user is linked to the `wheel` group in order to make it able to execute `sudo` commands.
 
 ### Set-up Working Network Configuration
+
 Before setting up the bootloader I like to setup the network configuration. The architecture I use uses the following components (make sure they are all installed beforehand):
-    - `iwd` is in charge of wireless authentication only (`wlan`-like interfaces).
-    - `systemd-networkd` is in charge of ethernet connections (`eth`-like interfaces) and DHCP protocol for both `wlan` and `eth` interfaces.
-    - `systemd-resolved` is in charge of DNS resolution.
+
+- `iwd` is in charge of wireless authentication only (`wlan`-like interfaces).
+- `systemd-networkd` is in charge of ethernet connections (`eth`-like interfaces) and DHCP protocol for both `wlan` and `eth` interfaces.
+- `systemd-resolved` is in charge of DNS resolution.
 
 We'll be taking `wlan0` and `eth0` as example interfaces. Network interfaces can be listed with
 
@@ -215,11 +217,11 @@ EnableNetworkConfiguration=false
 
 Now, for `systemd-resolved`, we must verify that `/etc/resolv.conf` is a symbolic link to `/run/systemd/resolve/stub-resolv.conf` which can be done with
 
-```bash
+```
 # ls -l /etc/resolv.conf 
 ```
 
-The expected output should look something like this
+The expected output should look something like this:
 
 ```
 > /etc/resolv.conf -> /run/systemd/resolve/stub-resolv.conf
@@ -227,15 +229,15 @@ The expected output should look something like this
 
 if it is not, we must delete the file, generate the link and then verify again:
 
-```bash
+```
 # rm /etc/resolv.conf
 # ln -s /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 # ls -l /etc/resolv.conf
 ```
 
-Once everything has been stablished, we enable the services to apply changes
+Once everything has been stablished, we enable the services to apply changes:
 
-```bash
+```
 # systemctl enable --now iwd
 # systemctl enable --now systemd-networkd
 # systemctl enable --now systemd-resolved
@@ -243,11 +245,11 @@ Once everything has been stablished, we enable the services to apply changes
 
 If there's a network available we can test the adequate functioning of the configuration with
 
-```bash
+```
 # networkctl status <interface>
 ```
 
-Output should show some section like
+The output should show some section like
 
 ```
 > DNS: 192.168.1.1
@@ -274,13 +276,13 @@ To install the bootloader do
 
 # Window Manager
 
-Once the base system boots cleanly and the internet access is established succesfully, we'll build a solid background to then build our WM setup.
+Once the base system boots cleanly and the internet access is established successfully, we'll build a solid background to then build our WM setup.
 
 ## AUR Helper
 
 Some software required will be available through AUR, for this, it's essential to have an AUR helper installed, in this case we'll use [**yay**](https://github.com/Jguer/yay)
 
-```bash
+```
 $ sudo pacman -S --needed git base-devel     # If not installed already
 $ git clone https://aur.archlinux.org/yay.git
 $ cd yay
@@ -291,13 +293,13 @@ $ makepkg -si
 
 Since we'll be using a [**Wayland**](https://wayland.freedesktop.org/) compositor, we'll start with that:
 
-```bash
+```
 $ sudo pacman -Sy wayland
 ```
 
-Now it's about we make sure our system's graphic drivers work. Depending on the system and your preferences, certain packages will be needed:
+Now we have to make sure our system's graphic drivers work. Depending on the system and your preferences, certain packages will be needed:
 
-```bash
+```
 $ sudo pacman -Sy mesa   # Intel/AMD GPU
 $ sudo pacman -Sy nvidia # or nvidia-dkms (dynamic kernel support) | Nvidia GPU
 $ sudo pacman -Sy vulkan-*   # If care about Vulcan
@@ -312,7 +314,7 @@ If you have Nvidia you might want to check the [**Hyprland-Nvidia page**](https:
 
 ### Notification Daemon
 
-```bash
+```
 $ sudo pacman -Sy dunst
 ```
 
@@ -322,7 +324,7 @@ $ sudo pacman -Sy dunst
 
 Required for screensharing. We'll also install `pipewire-pulse` for audio and `pavucontrol` for the GUI.
 
-```bash
+```
 $ sudo pacman -Sy pipewire wireplumber pipewire-pulse pavucontrol
 ```
 
@@ -330,7 +332,7 @@ $ sudo pacman -Sy pipewire wireplumber pipewire-pulse pavucontrol
 
 File pickers, screensharing, etc.
 
-```bash
+```
 $ sudo pacman -Sy xdg-user-dirs xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 ```
 
@@ -338,7 +340,7 @@ $ sudo pacman -Sy xdg-user-dirs xdg-desktop-portal xdg-desktop-portal-hyprland x
 
 Things that pop up a window asking you for a password whenever an app wants to elevate its privileges. Since `polkit` was installed with `pacstrap` we just do
 
-```bash
+```
 $ sudo pacman -Sy hyprpolkitagent
 ```
 
@@ -346,7 +348,7 @@ Must be started by window manager or desktop environment on startup/login.
 
 ### Qt Wayland Support
 
-```bash
+```
 $ sudo pacman -Sy qt5-wayland qt6-wayland
 ```
 
@@ -356,13 +358,13 @@ $ sudo pacman -Sy qt5-wayland qt6-wayland
 
 A sans-serif font is required to render text. Without one, you may see squares instead of text. A common choice is `noto-fonts`.
 
-```bash
+```
 $ sudo pacman -Sy noto-fonts noto-fonts-emoji
 ```
 
 ### Status Bar
 
-```bash
+```
 $ sudo pacman -Sy waybar
 ```
 
@@ -374,7 +376,7 @@ TBD
 
 ### App Launcher
 
-```bash
+```
 $ sudo pacman -Sy rofi
 ```
 
@@ -386,7 +388,7 @@ Some clients are known for being a massive pain under Wayland. Here are some rep
 
 Might be started by window manager or desktop environment on startup/loginwith `webcord --start-minimized` (who would want that anyway?).
 
-```bash
+```
 $ yay -S webcord
 ```
 
@@ -394,7 +396,7 @@ $ yay -S webcord
 
 For privacy, I use [**Mullvad VPN**](https://wiki.archlinux.org/title/Mullvad).
 
-```bash
+```
 $ sudo pacman -Sy mullvad-vpn
 $ sudo systemctl enable mullvad-vpn
 $ sudo systemctl enable mullvad-early-boot-blocking  # Pretty self-explanatory isn't it?
