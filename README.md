@@ -1,5 +1,4 @@
 
-# Table of contents
 
 
 # Overview
@@ -389,7 +388,37 @@ Some clients are known for being a massive pain under Wayland. Here are some rep
 Might be started by window manager or desktop environment on startup/login with `webcord --start-minimized` (who would want that anyway?).
 
 ```
-$ yay -S webcord
+$ yay -Sy webcord
+```
+
+### Color Picker
+
+```
+$ sudo pacman -Sy hyprpicker
+```
+
+### Clipboard Manager
+
+```
+$ yay -Sy cursor-clip-git
+```
+
+### File Manager
+
+```
+$ sudo pacman -Sy thunar
+```
+
+### Shell
+
+```
+$ sudo pacman -Sy fish
+```
+
+### Terminal Emulator
+
+```
+$ sudo pacman -Sy kitty
 ```
 
 ### VPN
@@ -398,23 +427,54 @@ For privacy, I use [**Mullvad VPN**](https://wiki.archlinux.org/title/Mullvad).
 
 ```
 $ sudo pacman -Sy mullvad-vpn
-$ sudo systemctl enable mullvad-vpn
-$ sudo systemctl enable mullvad-early-boot-blocking  # Pretty self-explanatory isn't it?
+$ sudo systemctl enable --now mullvad-vpn
+$ sudo systemctl enable --now mullvad-early-boot-blocking  # Pretty self-explanatory isn't it?
 ```
 
+### GUI's for Command-Line Packages
 
-### Pending packages to include somewhere
-- `brightnessctl`
-- `playerctl`
-- `udiskie`
-- `fastfetch`
-- `fish`
-- `kitty`
-- `ly`
-- `hyprland`
-- `thunar`
-- `cursor-clip-git` (AUR)
-- `vlc`
-- `iwgtk` (AUR)
-- `mullvad-vpn`
-- `cups`
+```
+$ sudo pacman -Sy udiskie iwgtk
+```
+
+### System Control
+
+```
+$ sudo pacman -Sy brightnessctl playerctl
+```
+
+### Bluetooth
+
+```
+$ sudo pacman -Sy bluez bluez-utils bluez-tools blueman  # Blueman is GUI
+$ sudo systemctl enable --now bluetooh
+```
+
+Bluetooth audio support in this case is handled by PipeWire itself (via `libspa-bluetooth`, included in the `pipewire` package or sometimes as a separate `pipewire-audio` package on Arch), in any case, `pulseaudio-bluetooth` is therefore not needed.
+
+### Misc. Utilities
+
+```
+$ sudo pacman -Sy fastfetch vlc cups
+```
+
+### Install Hyprland
+
+Now that all the system background is ready, it's time... (finally)
+
+```
+$ sudo pacman -Sy hyprland
+```
+
+Check if everythin works correctly by starting a session by running `start-hyprland` **without root acces**.
+
+### Display/login manager
+
+For simplicity I just use `ly` which is simple, lightweight and customizable. To start Ly at boot. First make sure to enable `ly@ttyX.service`, then disable `getty@ttyX.service` where X stands for a number from 1 to 6. This is done after checking that the hyprland sessions runs successfully.
+
+```
+$ sudo pacman -Sy ly
+$ sudo systemctl disable 
+```
+
+And, that's it. Especific configuration and source files can be found in each program `.config` folder. 
