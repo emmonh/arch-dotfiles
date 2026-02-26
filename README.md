@@ -1,8 +1,5 @@
-
-
-
 # Overview
-This file contains a detailed guide on how I setup an ArchLinux system from scratch (literally). This guide covers the initial Arch installation all the way to the final result: a fully customized, functional system. This guide shows the process I follow to build my Hyprland WM system, my way. Before anything, I'll ask whoever is reading this to have some grade of skepticism about what's written here, not because it's wrong (somethings surely are since this is the second window manager I try) but mainly because of the nature of Arch itself, don't forget to check the [**ArchWiki**](https://wiki.archlinux.org/title/Main_page) :)
+This file contains a detailed guide on how I setup an ArchLinux system from scratch (literally). This guide covers the initial Arch installation all the way to the final result. This guide shows the process I follow to build my Hyprland WM system, my way. Before anything, I'll ask whoever is reading this to have some grade of skepticism about what's written here, not because it's wrong (somethings surely are) but mainly because of the nature of Arch itself, don't forget to check the [**ArchWiki**](https://wiki.archlinux.org/title/Main_page) :)
 
 # Arch Installation
 ## Environment Setup (Pre-installation)
@@ -11,20 +8,20 @@ This file contains a detailed guide on how I setup an ArchLinux system from scra
 I assume the installation media already exists and the boot into the live enviroment was successful.
 
 ### Keyboard Layout
-Default keyboard layout is `us`, Available layouts can be listed with
+Default keyboard layout is `us`, Available layouts can be listed with:
 
 ```
 # localectl list-keymaps
 ```
 
-To set the keyboard layout run
+To set the keyboard layout run:
 
 ```
 # loadkeys <keys>
 ```
 
 ### Internet Connection
-A LAN cable is the easiest way to get network access but in case that is not possible, [**iwctl**](https://wiki.archlinux.org/title/Iwd#iwctl) can be used:
+A LAN cable is the easiest way to get network access but in case that is not possible, using [**iwctl**](https://wiki.archlinux.org/title/Iwd#iwctl):
 
 ```
 [iwd]# device list
@@ -37,14 +34,14 @@ A LAN cable is the easiest way to get network access but in case that is not pos
 [iwd]# station <dev_name> disconnect
 ```
 
-If it happens that there's connection but not internet access, a DHCP client will most likely be needed, in this case, using [**dhcpcd**](https://wiki.archlinux.org/title/Dhcpcd):
+If there's connection but no internet access, a DHCP client might be needed, using [**dhcpcd**](https://wiki.archlinux.org/title/Dhcpcd):
 
 ```
 # dhcpcd <dev_name>
 # ping arch.org      # Test connection
 ```
 
-If got a timed-out error try
+If got a timed-out error try:
 
 ```
 # ip a               # List network interfaces
@@ -64,7 +61,7 @@ Basic installation requires **three partitions**:
 - Swap (~4 GB) 
 - Root (~10 GB)
 
-**Recommended sizes vary based on the desired installation**. To create them, [**fdisk/cfdisk**](https://wiki.archlinux.org/title/Fdisk) can be used.
+**Recommended sizes vary based on the desired installation**. To create them, use [**fdisk/cfdisk**](https://wiki.archlinux.org/title/Fdisk).
 
 ### Formating the Partitions
 
@@ -86,22 +83,23 @@ Basic installation requires **three partitions**:
 
 ## Installation
 
-Mirrors can be choosen in `/etc/pacman.d/mirrorlist`. It is recommended to check the date with `timedatectl` and upload the `keyring` as well to avoid signature problems
+Mirrors can be choosen in `/etc/pacman.d/mirrorlist`. It is recommended to check the date with `timedatectl` and upload the `keyring` as well to avoid signature problems.
 
 ```
 # timedatectl
 # pacman -Sy archlinux-keyring
 ```
 
-In the rare case there's still signature problems, but you need a system somehow, you can try setting `SigLevel = TrustAll` in `/etc/pacman.conf`. After installation, check that `SigLevel` is not in `TrustAll` anymore because of **security**.
+If there's still signature problems, but a system is needed somehow, set `SigLevel = TrustAll` in `/etc/pacman.conf` for a **temporary** workaround to get going with the starting installation.
 
-To install the programs, `pacstrap` is used. Here's the complete command I run to install the system and all my "must have" software (this "must have" software is that one needed in order to make the system able to do the most basic and fundamental stuff I believe a computer should do): 
+To install the programs, `pacstrap` is used. Here's the complete command I run to install the base system packages and what I consider "must have" software (adjust to your preferences and needings): 
 
 ```
-# pacstrap -K /mnt base base linux linux-firmware dbus polkit udisks2 neovim vim base-devel iwd impala git grub efibootmgr <amd/intel>-ucode sof-firmware pacman-contrib
+# pacstrap -K /mnt base base linux linux-firmware dbus polkit udisks2 p7zip vim neovim base-devel git iwd bluez bluez-utils impala grub efibootmgr <amd/intel>-ucode sof-firmware pacman-contrib 
 ``` 
 
 ## System Configuration
+
 ### fstab
 
 ```
@@ -126,7 +124,7 @@ genfstab -U /mnt > /mnt/etc/fstab
 **NOTE**: Using the `ls` command the available time zones can be seen.
 
 ### Localization
-Uncomment `en_US.UTF-8 UTF-8` in `/etc/locale.gen` and then run
+Uncomment `en_US.UTF-8 UTF-8` in `/etc/locale.gen` and then run:
 
 ```
 # locale-gen
@@ -147,7 +145,7 @@ Set hostname in `/etc/hostname`.
 ```
 
 ### Sudoers file
-Edit the sudoers file with your editor via
+Edit the sudoers file with your preferred editor with:
 
 ```
 # EDITOR=<editor> visudo
@@ -170,22 +168,21 @@ Note that the user is linked to the `wheel` group in order to make it able to ex
 
 ### Set-up Working Network Configuration
 
-Before setting up the bootloader I like to setup the network configuration. The architecture I use uses the following components (make sure they are all installed beforehand):
+Before setting up the bootloader I like to make sure the network configuration works. The architecture I use uses the following components:
 
 - `iwd` is in charge of wireless authentication only (`wlan`-like interfaces).
 - `systemd-networkd` is in charge of ethernet connections (`eth`-like interfaces) and DHCP protocol for both `wlan` and `eth` interfaces.
 - `systemd-resolved` is in charge of DNS resolution.
 
-We'll be taking `wlan0` and `eth0` as example interfaces. Network interfaces can be listed with
+Take `wlan0` and `eth0` as example interfaces. Network interfaces can be listed with:
 
 ```
 # ip link
 # ip a           # More details         
 ```
 
-For `systemd-networkd`, in the folder `/etc/systemd/network`, a `XX-interface.network` file must be created for each network interface we want to use. The file naming follows this structure because of 1) files being evaluated alphabetically (in case there were different files for one same network interface) and 2) to make the management easier in case we'd like to change something. 
-
-In this case, it would be two files named `01-eth0.network` and `02-wlan0.network` with the following content:
+For `systemd-networkd`, in the folder `/etc/systemd/network`, create a `XX-interface.network` file for each network interface you intend to use. The file naming follows this structure because of 1) files being evaluated alphabetically (in case there were different files for one same network interface) and 2) to make the management easier when doing changes. 
+For this example, it would be two files named `01-eth0.network` and `02-wlan0.network` with the following content:
 
 ```ini
 [Match]
@@ -195,7 +192,7 @@ Name=<interface>
 DHCP=yes    
 ```
 
-If a static IP is prefered, the file would look somethink like this:
+If you prefer a static IP, the file would look something like this:
 
 ```ini
 [Match]
@@ -207,14 +204,14 @@ Gateway=192.168.1.1
 DNS=8.8.8.8
 ```
 
-Once the `.network` files have been created, I want to avoid `iwd` being in charge of **DHCP** for wireless interfaces since `systemd-networkd` is what I intend to use to do so, this can be achieved by editing (or creating if it doesn't exists) the file `/etc/iwd/main.conf` which should look just like this: 
+Once the `.network` files have been created, `iwd` must be explicitly configured so it doesn't manage **DHCP** for wireless interfaces since `systemd-networkd` is the tool intended to do so, this can be achieved by editing (or creating if it doesn't exists) the file `/etc/iwd/main.conf` which should look like this: 
 
 ```ini
 [General]
 EnableNetworkConfiguration=false
 ```
 
-Now, for `systemd-resolved`, we must verify that `/etc/resolv.conf` is a symbolic link to `/run/systemd/resolve/stub-resolv.conf` which can be done with
+Now, for `systemd-resolved`, verify that `/etc/resolv.conf` is a symbolic link to `/run/systemd/resolve/stub-resolv.conf` with:
 
 ```
 # ls -l /etc/resolv.conf 
@@ -226,7 +223,7 @@ The expected output should look something like this:
 > /etc/resolv.conf -> /run/systemd/resolve/stub-resolv.conf
 ```
 
-if it is not, we must delete the file, generate the link and then verify again:
+if it is not, the file must be deleted to then, regenerate the link and verify again:
 
 ```
 # rm /etc/resolv.conf
@@ -234,7 +231,7 @@ if it is not, we must delete the file, generate the link and then verify again:
 # ls -l /etc/resolv.conf
 ```
 
-Once everything has been stablished, we enable the services to apply changes:
+Once everything has been stablished, services are enabled to apply changes:
 
 ```
 # systemctl enable --now iwd
@@ -242,7 +239,7 @@ Once everything has been stablished, we enable the services to apply changes:
 # systemctl enable --now systemd-resolved
 ```
 
-If there's a network available we can test the adequate functioning of the configuration with
+If there's a network available, test the configuration with:
 
 ```
 # networkctl status <interface>
@@ -258,14 +255,14 @@ or similar.
 
 ### Bootloader
 
-To install the bootloader do
+To install the bootloader do:
 
 ```
 # grub-install <boot_part>
 # grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-## Reboot
+After that, to reboot into the freshly installed system run:
 
 ```
 # exit
@@ -273,22 +270,22 @@ To install the bootloader do
 # reboot
 ```
 
-# Window Manager
+# System Setup
 
-Once the base system boots cleanly and the internet access is established successfully, we'll build a solid background to then build our WM setup.
+From now on it's about adding more "familiar" packages to the system in order to customize it and get the best out of it.
 
-## AUR Helper
+### AUR Helper
 
-Some software required will be available through AUR, for this, it's essential to have an AUR helper installed, in this case we'll use [**yay**](https://github.com/Jguer/yay)
+Some software required will be available through AUR, for this, it's essential to have an AUR helper installed, in this case we'll use [**yay**](https://github.com/Jguer/yay):
 
 ```
-$ sudo pacman -S --needed git base-devel     # If not installed already
+$ sudo pacman -Sy git base-devel     # If not installed already
 $ git clone https://aur.archlinux.org/yay.git
 $ cd yay
 $ makepkg -si
 ```
 
-## Graphics
+### Graphics
 
 Since we'll be using a [**Wayland**](https://wayland.freedesktop.org/) compositor, we'll start with that:
 
@@ -296,20 +293,20 @@ Since we'll be using a [**Wayland**](https://wayland.freedesktop.org/) composito
 $ sudo pacman -Sy wayland
 ```
 
-Now we have to make sure our system's graphic drivers work. Depending on the system and your preferences, certain packages will be needed:
+Now we have to make sure our system's graphic drivers work. Depending on the system and personal preferences, certain packages will be needed:
 
 ```
 $ sudo pacman -Sy mesa   # Intel/AMD GPU
 $ sudo pacman -Sy nvidia # or nvidia-dkms (dynamic kernel support) | Nvidia GPU
 $ sudo pacman -Sy vulkan-*   # If care about Vulcan
-$ sudo pacman -Sy libva      # or mesa-vdpau | Video accel needed
+$ sudo pacman -Sy libva      # or mesa-vdpau | Video accel
 ```
 
 If you have Nvidia you might want to check the [**Hyprland-Nvidia page**](https://wiki.hypr.land/Nvidia/).
 
 ## Basic Must-Have Utilities
 
-[**Here**](https://wiki.hypr.land/Useful-Utilities/Must-have/) you can see that there's certain software strongly recommended to be running beforehand in order to have a smooth Hyprland experience so we'll do just that.
+[**Here**](https://wiki.hypr.land/Useful-Utilities/Must-have/) you can see that there's certain software strongly recommended to be running beforehand in order to have a smooth **Hyprland** experience so we'll do just that.
 
 ### Notification Daemon
 
@@ -321,11 +318,13 @@ $ sudo pacman -Sy dunst
 
 ### Pipewire
 
-Required for screensharing. We'll also install `pipewire-pulse` for audio and `pavucontrol` for the GUI.
+Required for screensharing. We'll also install `pipewire-pulse` for audio and `pavucontrol` for the GUI:
 
 ```
 $ sudo pacman -Sy pipewire wireplumber pipewire-pulse pavucontrol
 ```
+
+**Note:** Typically a package like `pulseaudio-bluetooth` would be needed, but since we're using `pipewire`, that is not necessary.
 
 ### XDG Desktop Portal
 
@@ -337,7 +336,7 @@ $ sudo pacman -Sy xdg-user-dirs xdg-desktop-portal xdg-desktop-portal-hyprland x
 
 ### Authentication Agent
 
-Things that pop up a window asking you for a password whenever an app wants to elevate its privileges. Since `polkit` was installed with `pacstrap` we just do
+Things that pop up a window asking you for a password whenever an app wants to elevate its privileges. Since `polkit` was installed with `pacstrap` we just do:
 
 ```
 $ sudo pacman -Sy hyprpolkitagent
@@ -353,13 +352,25 @@ $ sudo pacman -Sy qt5-wayland qt6-wayland
 
 ### Fonts
 
-**NOTE** To be added: Nerdfont
-
 A sans-serif font is required to render text. Without one, you may see squares instead of text. A common choice is `noto-fonts`.
 
 ```
 $ sudo pacman -Sy noto-fonts noto-fonts-emoji
 ```
+
+### Nerd Font
+
+Nerd Fonts are a collection of fonts patched to include a variety of programming and development-related icons and glyps. We'll need that in order to have the icons of things like status bar or some TUI applications to render correctly.
+
+Some fonts I've liked so far are
+
+- [**0xProto**](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/0xProto)
+
+- [**GeistMono**](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/GeistMono)
+
+- [**Noto**](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Noto)
+
+To install fonts, place them in `~/.local/share/fonts/` or `/usr/share/fonts/` for system wide access.
 
 ### Status Bar
 
@@ -403,6 +414,8 @@ $ sudo pacman -Sy hyprpicker
 $ yay -Sy cursor-clip-git
 ```
 
+`cursor-clip --daemon` must be started by window manager or desktop environment on startup/login 
+
 ### File Manager
 
 ```
@@ -428,53 +441,37 @@ For privacy, I use [**Mullvad VPN**](https://wiki.archlinux.org/title/Mullvad).
 ```
 $ sudo pacman -Sy mullvad-vpn
 $ sudo systemctl enable --now mullvad-vpn
-$ sudo systemctl enable --now mullvad-early-boot-blocking  # Pretty self-explanatory isn't it?
+$ sudo systemctl enable --now mullvad-early-boot-blocking
 ```
 
 ### GUI's for Command-Line Packages
 
 ```
-$ sudo pacman -Sy udiskie iwgtk
+$ sudo pacman -Sy udiskie iwgtk blueman
 ```
 
-### System Control
+### System Control and Misc. Utilites
 
 ```
-$ sudo pacman -Sy brightnessctl playerctl
-```
-
-### Bluetooth
-
-```
-$ sudo pacman -Sy bluez bluez-utils bluez-tools blueman  # Blueman is GUI
-$ sudo systemctl enable --now bluetooh
-```
-
-Bluetooth audio support in this case is handled by PipeWire itself (via `libspa-bluetooth`, included in the `pipewire` package or sometimes as a separate `pipewire-audio` package on Arch), in any case, `pulseaudio-bluetooth` is therefore not needed.
-
-### Misc. Utilities
-
-```
-$ sudo pacman -Sy fastfetch vlc cups
+$ sudo pacman -Sy brightnessctl playerctl fastfetch vlc cups
 ```
 
 ### Install Hyprland
 
-Now that all the system background is ready, it's time... (finally)
+Now that all the system background is ready we install `hyprland`:
 
 ```
 $ sudo pacman -Sy hyprland
 ```
 
-Check if everythin works correctly by starting a session by running `start-hyprland` **without root acces**.
+Check if everything works correctly by starting a session via `start-hyprland` (**without root acces**).
 
 ### Display/login manager
 
-For simplicity I just use `ly` which is simple, lightweight and customizable. To start Ly at boot. First make sure to enable `ly@ttyX.service`, then disable `getty@ttyX.service` where X stands for a number from 1 to 6. This is done after checking that the hyprland sessions runs successfully.
+For simplicity I use [**Ly**](https://wiki.archlinux.org/title/Ly) which is simple, lightweight and customizable. To start **Ly** at boot. First make sure to enable `ly@ttyX.service`, then disable `getty@ttyX.service` where `X` stands for a number from 1 to 6. Again, this is done **after checking** that the hyprland sessions runs successfully.
 
 ```
 $ sudo pacman -Sy ly
-$ sudo systemctl disable 
+$ sudo systemctl enable ly@ttyX
+$ sudo systemctl disable getty@ttyX
 ```
-
-And, that's it. Especific configuration and source files can be found in each program `.config` folder. 
