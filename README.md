@@ -424,6 +424,8 @@ $ sudo pacman -Sy thunar
 
 ### Shell
 
+For the shell, my choice is [**fish**](https://fishshell.com/).
+
 ```
 $ sudo pacman -Sy fish
 ```
@@ -453,7 +455,7 @@ $ sudo pacman -Sy udiskie iwgtk blueman
 ### System Control and Misc. Utilites
 
 ```
-$ sudo pacman -Sy brightnessctl playerctl fastfetch vlc cups
+$ sudo pacman -Sy brightnessctl playerctl fastfetch vlc cups exa bat slurp grim
 ```
 
 ### Install Hyprland
