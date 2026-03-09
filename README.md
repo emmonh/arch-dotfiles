@@ -1,5 +1,5 @@
 # Overview
-This file contains a detailed guide on how I setup an ArchLinux system from scratch (literally). This guide covers the initial Arch installation all the way to the final result. This guide shows the process I follow to build my Hyprland WM system, my way. Before anything, I'll ask whoever is reading this to have some grade of skepticism about what's written here, not because it's wrong (somethings surely are) but mainly because of the nature of Arch itself, don't forget to check the [**ArchWiki**](https://wiki.archlinux.org/title/Main_page) :)
+This file contains a detailed guide on how I setup an ArchLinux system from scratch (literally). This guide covers the initial Arch installation all the way to the final result. This guide shows the process I follow to build my Hyprland WM system, my way. Before anything, I'll ask whoever is reading this to have some grade of skepticism about what's written here, not because it's wrong (somethings surely are) but mainly because of the nature of Arch itself, don't forget to check the [**ArchWiki**](https://wiki.archlinux.org/title/Main_page)
 
 # Arch Installation
 ## Environment Setup (Pre-installation)
@@ -95,7 +95,7 @@ If there's still signature problems, but a system is needed somehow, set `SigLev
 To install the programs, `pacstrap` is used. Here's the complete command I run to install the base system packages and what I consider "must have" software (adjust to your preferences and needings): 
 
 ```
-# pacstrap -K /mnt base base linux linux-firmware dbus polkit udisks2 p7zip vim neovim base-devel git iwd bluez bluez-utils impala grub efibootmgr <amd/intel>-ucode sof-firmware pacman-contrib 
+# pacstrap -K /mnt base base linux linux-firmware dbus polkit udisks2 p7zip neovim base-devel git iwd bluez bluez-utils impala grub efibootmgr <amd/intel>-ucode sof-firmware pacman-contrib 
 ``` 
 
 ## System Configuration
@@ -296,8 +296,8 @@ $ sudo pacman -Sy wayland
 Now we have to make sure our system's graphic drivers work. Depending on the system and personal preferences, certain packages will be needed:
 
 ```
-$ sudo pacman -Sy mesa   # Intel/AMD GPU
-$ sudo pacman -Sy nvidia # or nvidia-dkms (dynamic kernel support) | Nvidia GPU
+$ sudo pacman -Sy mesa       # Intel/AMD GPU
+$ sudo pacman -Sy nvidia     # or nvidia-dkms (dynamic kernel support) | Nvidia GPU
 $ sudo pacman -Sy vulkan-*   # If care about Vulcan
 $ sudo pacman -Sy libva      # or mesa-vdpau | Video accel
 ```
@@ -355,12 +355,12 @@ $ sudo pacman -Sy qt5-wayland qt6-wayland
 A sans-serif font is required to render text. Without one, you may see squares instead of text. A common choice is `noto-fonts`.
 
 ```
-$ sudo pacman -Sy noto-fonts noto-fonts-emoji
+$ sudo pacman -Sy noto-fonts noto-fonts-emoji otf-ipafont
 ```
 
 ### Nerd Font
 
-Nerd Fonts are a collection of fonts patched to include a variety of programming and development-related icons and glyps. We'll need that in order to have the icons of things like status bar or some TUI applications to render correctly.
+[**Nerd Fonts**](https://github.com/ryanoasis/nerd-fonts) are a collection of fonts patched to include a variety of programming and development-related icons and glyps. We'll need that in order to have the icons of things like status bar or some TUI applications to render correctly.
 
 Some fonts I've liked so far are
 
@@ -455,7 +455,7 @@ $ sudo pacman -Sy udiskie iwgtk blueman
 ### System Control and Misc. Utilites
 
 ```
-$ sudo pacman -Sy brightnessctl playerctl fastfetch vlc cups exa bat slurp grim
+$ sudo pacman -Sy brightnessctl playerctl fastfetch vlc cups cups-pdf usbutils v4l-utils exa bat slurp grim
 ```
 
 ### Install Hyprland
@@ -466,7 +466,7 @@ Now that all the system background is ready we install `hyprland`:
 $ sudo pacman -Sy hyprland
 ```
 
-Check if everything works correctly by starting a session via `start-hyprland` (**without root acces**).
+Check if everything works correctly by starting a session via `start-hyprland` (**without root access**).
 
 ### Display/login manager
 
