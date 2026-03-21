@@ -87,15 +87,15 @@ Mirrors can be choosen in `/etc/pacman.d/mirrorlist`. It is recommended to check
 
 ```
 # timedatectl
-# pacman -Sy archlinux-keyring
+# pacman -S archlinux-keyring
 ```
 
 If there's still signature problems, but a system is needed somehow, set `SigLevel = TrustAll` in `/etc/pacman.conf` for a **temporary** workaround to get going with the starting installation.
 
-To install the programs, `pacstrap` is used. Here's the complete command I run to install the base system packages and what I consider "must have" software (adjust to your preferences and needings): 
+To install the programs, `pacstrap` is used. Here's the complete command I run to install the base system packages and my "basic" software (adjust to your preferences and needings): 
 
 ```
-# pacstrap -K /mnt base base linux linux-firmware dbus polkit udisks2 p7zip neovim base-devel git iwd bluez bluez-utils impala grub efibootmgr <amd/intel>-ucode sof-firmware pacman-contrib 
+# pacstrap -K /mnt base base linux linux-firmware dbus polkit udisks2 p7zip neovim base-devel git iwd bluez bluez-utils impala grub efibootmgr <amd/intel>-ucode sof-firmware pacman-contrib keyd fish
 ``` 
 
 ## System Configuration
@@ -132,7 +132,9 @@ Uncomment `en_US.UTF-8 UTF-8` in `/etc/locale.gen` and then run:
 
 Set locals in `/etc/locale.conf`. Add `LANG=en_US.UTF-8`.
 
-Set console layout in `/etc/vconsole.conf`. Add `KEYMAP=<keys>`.
+Set console layout in `/etc/vconsole.conf`. Add `KEYMAP=<keys>`
+
+**NOTE:** To avoid conflicts or abnormal keyboard behavior within window compositor/manager sessions (at least with hyprland), unless required, use simple and standard layouts within `/etc/vconsole.conf` (eg. `us`, `es`, `la-latin1`, etc.)
 
 ### Hostname
 
@@ -279,7 +281,7 @@ From now on it's about adding more "familiar" packages to the system in order to
 Some software required will be available through AUR, for this, it's essential to have an AUR helper installed, in this case we'll use [**yay**](https://github.com/Jguer/yay):
 
 ```
-$ sudo pacman -Sy git base-devel     # If not installed already
+$ sudo pacman -S git base-devel     # If not installed already
 $ git clone https://aur.archlinux.org/yay.git
 $ cd yay
 $ makepkg -si
@@ -290,16 +292,16 @@ $ makepkg -si
 Since we'll be using a [**Wayland**](https://wayland.freedesktop.org/) compositor, we'll start with that:
 
 ```
-$ sudo pacman -Sy wayland
+$ sudo pacman -S wayland
 ```
 
 Now we have to make sure our system's graphic drivers work. Depending on the system and personal preferences, certain packages will be needed:
 
 ```
-$ sudo pacman -Sy mesa       # Intel/AMD GPU
-$ sudo pacman -Sy nvidia     # or nvidia-dkms (dynamic kernel support) | Nvidia GPU
-$ sudo pacman -Sy vulkan-*   # If care about Vulcan
-$ sudo pacman -Sy libva      # or mesa-vdpau | Video accel
+$ sudo pacman -S mesa       # Intel/AMD GPU
+$ sudo pacman -S nvidia     # or nvidia-dkms (dynamic kernel support) | Nvidia GPU
+$ sudo pacman -S vulkan-*   # If care about Vulcan
+$ sudo pacman -S libva      # or mesa-vdpau | Video accel
 ```
 
 If you have Nvidia you might want to check the [**Hyprland-Nvidia page**](https://wiki.hypr.land/Nvidia/).
@@ -308,10 +310,37 @@ If you have Nvidia you might want to check the [**Hyprland-Nvidia page**](https:
 
 [**Here**](https://wiki.hypr.land/Useful-Utilities/Must-have/) you can see that there's certain software strongly recommended to be running beforehand in order to have a smooth **Hyprland** experience so we'll do just that.
 
+### Input remaps
+
+Very simple change but it's a must if you use **vim**. We do so via [**keyd**](https://github.com/rvaiya/keyd) so remapping works on both in console and graphical environments since it does kernel-level remapping. The config I use is the following
+
+```
+# This file must be placed in /etc/keyd/
+
+[ids]
+*
+
+[main]
+capslock = esc
+esc = capslock
+```
+
+To enable remapping, we copy the previous configuration in `/etc/keyd/default.conf` and then we do:
+
+```
+$ sudo systemctl enable --now keyd 
+```
+
+If later on another config is applied:
+
+```
+$ sudo systemctl restart keyd 
+```
+
 ### Notification Daemon
 
 ```
-$ sudo pacman -Sy dunst
+$ sudo pacman -S dunst
 ```
 
 `/usr/bin/dunst` must be started by window manager or desktop environment on startup/login.
@@ -321,7 +350,7 @@ $ sudo pacman -Sy dunst
 Required for screensharing. We'll also install `pipewire-pulse` for audio and `pavucontrol` for the GUI:
 
 ```
-$ sudo pacman -Sy pipewire wireplumber pipewire-pulse pavucontrol
+$ sudo pacman -S pipewire wireplumber pipewire-pulse pavucontrol
 ```
 
 **Note:** Typically a package like `pulseaudio-bluetooth` would be needed, but since we're using `pipewire`, that is not necessary.
@@ -331,7 +360,7 @@ $ sudo pacman -Sy pipewire wireplumber pipewire-pulse pavucontrol
 File pickers, screensharing, etc.
 
 ```
-$ sudo pacman -Sy xdg-user-dirs xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
+$ sudo pacman -S xdg-user-dirs xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 ```
 
 ### Authentication Agent
@@ -339,7 +368,7 @@ $ sudo pacman -Sy xdg-user-dirs xdg-desktop-portal xdg-desktop-portal-hyprland x
 Things that pop up a window asking you for a password whenever an app wants to elevate its privileges. Since `polkit` was installed with `pacstrap` we just do:
 
 ```
-$ sudo pacman -Sy hyprpolkitagent
+$ sudo pacman -S hyprpolkitagent
 ```
 
 Must be started by window manager or desktop environment on startup/login.
@@ -347,16 +376,26 @@ Must be started by window manager or desktop environment on startup/login.
 ### Qt Wayland Support
 
 ```
-$ sudo pacman -Sy qt5-wayland qt6-wayland
+$ sudo pacman -S qt5-wayland qt6-wayland
 ```
 
 ### Fonts
 
-A sans-serif font is required to render text. Without one, you may see squares instead of text. A common choice is `noto-fonts`. Install `otf-ipafont` for japanese chars support.
+A sans-serif font is required to render text. Without one, you may see squares instead of text. A common choice is `noto-fonts`. 
 
 ```
-$ sudo pacman -Sy fontconfig noto-fonts noto-fonts-emoji otf-ipafont
+$ sudo pacman -S fontconfig noto-fonts noto-fonts-emoji 
 ```
+
+#### [Optional] Japanese I/O
+
+If only want japanese symbols to display correctly, install `otf-ipafont`. To set up japanese typing in a non-japanese keyboard, I use the [**IBus**](https://wiki.archlinux.org/title/IBus) IMF along with the [**ibus-mozc**](https://wiki.archlinux.org/title/Input_method) IME
+```
+$ sudo pacman -S otf-ipafont ibus
+$ yay -S ibus-mozc
+```
+
+**IBus** is started on user login via `ibus start --type wayland` on [hyprland.conf](.config/hypr/hyprland.conf). **Ibus** must be configured to use **mozc**, this can be done by running `ibus-setup` or by clicking "Preferences" in the system tray.
 
 ### Nerd Font
 
@@ -375,7 +414,7 @@ To install fonts, place them in `~/.local/share/fonts/` or `/usr/share/fonts/` f
 ### Status Bar
 
 ```
-$ sudo pacman -Sy waybar
+$ sudo pacman -S waybar
 ```
 
 Must be started by window manager or desktop environment on startup/login.
@@ -395,7 +434,7 @@ Daemon `awww-daemotn` must be started by window manager or desktop environment o
 ### App Launcher
 
 ```
-$ sudo pacman -Sy rofi
+$ sudo pacman -S rofi
 ```
 
 ### App Clients
@@ -407,19 +446,19 @@ Some clients are known for being a massive pain under Wayland. Here are some rep
 Might be started by window manager or desktop environment on startup/login with `webcord --start-minimized` (who would want that anyway?).
 
 ```
-$ yay -Sy webcord
+$ yay -S webcord
 ```
 
 ### Color Picker
 
 ```
-$ sudo pacman -Sy hyprpicker
+$ sudo pacman -S hyprpicker
 ```
 
 ### Clipboard Manager
 
 ```
-$ yay -Sy cursor-clip-git
+$ yay -S cursor-clip-git
 ```
 
 `cursor-clip --daemon` must be started by window manager or desktop environment on startup/login 
@@ -427,21 +466,21 @@ $ yay -Sy cursor-clip-git
 ### File Manager
 
 ```
-$ sudo pacman -Sy thunar tumbler
+$ sudo pacman -S thunar tumbler
 ```
 
 ### Shell
 
-For the shell, my choice is [**fish**](https://fishshell.com/).
+As shown in [**installation**](#installation), my shell of choice is [**fish**](https://fishshell.com/).
 
 ```
-$ sudo pacman -Sy fish
+$ sudo pacman -S fish
 ```
 
 ### Terminal Emulator
 
 ```
-$ sudo pacman -Sy kitty
+$ sudo pacman -S kitty
 ```
 
 ### VPN
@@ -449,7 +488,7 @@ $ sudo pacman -Sy kitty
 For privacy, I use [**Mullvad VPN**](https://wiki.archlinux.org/title/Mullvad).
 
 ```
-$ sudo pacman -Sy mullvad-vpn
+$ sudo pacman -S mullvad-vpn
 $ sudo systemctl enable --now mullvad-vpn
 $ sudo systemctl enable --now mullvad-early-boot-blocking
 ```
@@ -457,13 +496,13 @@ $ sudo systemctl enable --now mullvad-early-boot-blocking
 ### GUI's for Command-Line Packages
 
 ```
-$ sudo pacman -Sy udiskie iwgtk blueman
+$ sudo pacman -S udiskie iwgtk blueman
 ```
 
 ### System Control and Misc. Utilites
 
 ```
-$ sudo pacman -Sy brightnessctl playerctl fastfetch vlc cups cups-pdf usbutils v4l-utils exa bat slurp grim
+$ sudo pacman -S brightnessctl playerctl fastfetch vlc cups cups-pdf usbutils v4l-utils exa bat slurp grim
 ```
 
 ### Install Hyprland
@@ -471,7 +510,7 @@ $ sudo pacman -Sy brightnessctl playerctl fastfetch vlc cups cups-pdf usbutils v
 Now that all the system background is ready we install `hyprland`:
 
 ```
-$ sudo pacman -Sy hyprland
+$ sudo pacman -S hyprland
 ```
 
 Check if everything works correctly by starting a session via `start-hyprland` (**without root access**).
@@ -481,7 +520,7 @@ Check if everything works correctly by starting a session via `start-hyprland` (
 For simplicity I use [**Ly**](https://wiki.archlinux.org/title/Ly) which is simple, lightweight and customizable. To start **Ly** at boot. First make sure to enable `ly@ttyX.service`, then disable `getty@ttyX.service` where `X` stands for a number from 1 to 6. Again, this is done **after checking** that the hyprland sessions runs successfully.
 
 ```
-$ sudo pacman -Sy ly
+$ sudo pacman -S ly
 $ sudo systemctl enable ly@ttyX
 $ sudo systemctl disable getty@ttyX
 ```
