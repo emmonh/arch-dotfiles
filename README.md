@@ -382,7 +382,14 @@ Must be started by window manager or desktop environment on startup/login.
 
 ### Wallpaper
 
-TBD
+My choice for wallpaper is [**awww**](https://codeberg.org/LGFae/awww)
+
+```
+$ yay -S awww-bin
+```
+
+Daemon `awww-daemotn` must be started by window manager or desktop environment on startup/login.
+
 
 ### App Launcher
 
@@ -419,7 +426,7 @@ $ yay -Sy cursor-clip-git
 ### File Manager
 
 ```
-$ sudo pacman -Sy thunar
+$ sudo pacman -Sy thunar tumbler
 ```
 
 ### Shell
