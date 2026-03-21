@@ -352,10 +352,10 @@ $ sudo pacman -Sy qt5-wayland qt6-wayland
 
 ### Fonts
 
-A sans-serif font is required to render text. Without one, you may see squares instead of text. A common choice is `noto-fonts`.
+A sans-serif font is required to render text. Without one, you may see squares instead of text. A common choice is `noto-fonts`. Install `otf-ipafont` for japanese chars support.
 
 ```
-$ sudo pacman -Sy noto-fonts noto-fonts-emoji otf-ipafont
+$ sudo pacman -Sy fontconfig noto-fonts noto-fonts-emoji otf-ipafont
 ```
 
 ### Nerd Font
@@ -382,10 +382,11 @@ Must be started by window manager or desktop environment on startup/login.
 
 ### Wallpaper
 
-My choice for wallpaper is [**awww**](https://codeberg.org/LGFae/awww)
+My choice for wallpaper is [**awww**](https://codeberg.org/LGFae/awww), this configuration uses [**matugen**](https://github.com/InioX/matugen) to generate the color palette shown on **rofi** and **waybar**
 
 ```
-$ yay -S awww-bin
+$ yay -S awww-bin 
+$ sudo pacman -S matugen
 ```
 
 Daemon `awww-daemotn` must be started by window manager or desktop environment on startup/login.
