@@ -14,13 +14,13 @@
         "hyprland/window"
     ],
     "modules-right": [
+        "tray",
         "pulseaudio",
         "network",
         "power-profiles-daemon",
         "backlight",
         "battery",
         "battery#bat2",
-        "tray",
         "custom/power"
     ],
     "hyprland/workspaces": {
@@ -40,7 +40,8 @@
     },
     "hyprland/window": {
         "icon": true,
-        "format": "{title}"
+        "format": "{title}",
+        "separate-outputs": true
     },
     "tray": {
         // "icon-size": 21,
@@ -55,11 +56,12 @@
         // "timezone": "America/New_York",
         "interval": 1,
         "format": " {:%H:%M:%S}",
+        // "format-alt": " {:%Y年%m月%d日 (%a)}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "backlight": {
         // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
+        "format": "{percent}% {icon} ",
         "format-icons": ["󰃞", "󰃟", "󰃠"]
     },
     "battery": {
@@ -98,7 +100,7 @@
         "format-disconnected": "⚠ ",
         "tooltip-format-wifi": "{essid} ({signalStrength}%)",
         "tooltip-format-ethernet": "{ifname}",
-        "tooltip-format-disconnected": "Disconnected",
+        "tooltip-format-disconnected": "Disconnected"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
@@ -107,7 +109,7 @@
         "format-bluetooth-muted": "{volume}% 󰝟 {format_source}",
         "format-muted": "{volume}% 󰝟 {format_source}",
         "format-source": "󰍬",
-        "format-source-muted": "󰍭",
+        "format-source-muted": "",
         "format-icons": {
             "headphone": "",
             "headset": "󰋎",
@@ -117,6 +119,9 @@
             "default": ["󰕿", "󰖀", "󰕾"]
         },
     },
+    "custom/date": {
+        "format": "今日は{%Y}年{%m}月{%d}日 ({%a})"
+    }
 //    "custom/power": {
 //        "format" : "⏻ ",
 //	    "tooltip": false,

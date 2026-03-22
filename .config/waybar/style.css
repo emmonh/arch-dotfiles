@@ -1,7 +1,7 @@
 * {
     margin: 2px 1px 1px;
     font-family: "0xProto Nerd Font";
-    font-size: 15px;
+    font-size: 13px;
 }
 
 window#waybar {
@@ -19,7 +19,6 @@ window#waybar {
 window#waybar.hidden {
     opacity: 0.2;
 }
-
 
 window#waybar.empty #window{
     background-color: transparent;
@@ -46,7 +45,9 @@ button:hover {
 }
 
 #workspaces {
-    padding: 0;
+    border-radius: 15px;
+    padding: 0 5px;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 #workspaces button {
@@ -56,23 +57,19 @@ button:hover {
     padding: 0 5px;
     background-color: transparent;
     color: #ffffff;
-    transition: background-color .4s;
+    transition: background-color .4s, padding .4s;
 }
 
-#workspaces button:hover {
+#workspaces button:hover, #workspaces button.visible {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 15px;
     box-shadow: none;
 }
 
-#workspaces button.focused, #workspaces button.active {
+#workspaces button.active.hosting-monitor {
     border-radius: 15px;
     background-color: #ffffff;
     color: #000000;
-}
-
-#workspaces button.urgent {
-    background-color: #eb4d4b;
 }
 
 #mode {
@@ -103,11 +100,18 @@ button:hover {
     border-radius: 15px;
 }
 
-#workspaces {
-    border-radius: 15px;
-    padding: 0 5px;
-    background-color: rgba(0, 0, 0, 0.5);
+#battery.warning {
+    color: yellow;
 }
+
+#battery.critical {
+    color: red;
+}
+
+#pulseaudio.muted {
+    color: red
+}
+
 
 /* If workspaces is the leftmost module, omit left margin */
 .modules-left > widget:first-child > #workspaces {
