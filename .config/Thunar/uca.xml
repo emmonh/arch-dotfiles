@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<submenu></submenu>
+	<unique-id>1771655689573432-1</unique-id>
+	<command>cd %f &amp;&amp; kitty</command>
+	<description>Open terminal at current location</description>
+	<range></range>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>emblem-package</icon>
+	<name>Compress to ZIP</name>
+	<submenu></submenu>
+	<unique-id>1776379281419846-1</unique-id>
+	<command>7z a -tzip compressed.zip %F </command>
+	<description>Compress selected files into a new .zip file</description>
+	<range>*</range>
+	<patterns>*</patterns>
+</action>
+</actions>

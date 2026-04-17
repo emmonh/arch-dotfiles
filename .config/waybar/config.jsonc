@@ -15,6 +15,7 @@
     ],
     "modules-right": [
         "tray",
+        "custom/theme",
         "pulseaudio",
         "network",
         "power-profiles-daemon",
@@ -45,7 +46,7 @@
     },
     "tray": {
         // "icon-size": 21,
-        "spacing": 10,
+        "spacing": 10
         // "icons": {
         //   "blueman": "bluetooth",
         //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png"
@@ -55,14 +56,13 @@
     "clock": {
         // "timezone": "America/New_York",
         "interval": 1,
-        "format": " {:%H:%M:%S}",
-        // "format-alt": " {:%Y年%m月%d日 (%a)}",
+        "format": " {:%Y年%m月%d日 (%a) |  %H:%M:%S}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "backlight": {
         // "device": "acpi_video1",
         "format": "{percent}% {icon} ",
-        "format-icons": ["󰃞", "󰃟", "󰃠"]
+        "format-icons": ["󱩐", "󱩓", "󱩖"]
     },
     "battery": {
         "states": {
@@ -117,10 +117,13 @@
             "portable": "",
             "car": "",
             "default": ["󰕿", "󰖀", "󰕾"]
-        },
+        }
     },
-    "custom/date": {
-        "format": "今日は{%Y}年{%m}月{%d}日 ({%a})"
+    "custom/theme": {
+        "exec": "/bin/bash ~/.config/hypr/scripts/themestatus.sh",
+        "on-click": "/bin/bash ~/.config/hypr/scripts/toggletheme.sh",
+        "tooltip-format": "Switch Theme",
+        "interval": 1
     }
 //    "custom/power": {
 //        "format" : "⏻ ",

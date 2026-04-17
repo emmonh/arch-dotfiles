@@ -9,3 +9,7 @@
 !fish
 !nvim
 !waybar
+Thunar/*
+!Thunar/
+!Thunar/uca.xml
+
