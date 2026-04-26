@@ -36,7 +36,7 @@
             "6": "六"
         },
         "persistent-workspaces": {
-            "*": [1,2,3,4,5,6] 
+            "*": [1,2,3,4,5,6]
         }
     },
     "hyprland/window": {
@@ -120,8 +120,8 @@
         }
     },
     "custom/theme": {
-        "exec": "/bin/bash ~/.config/hypr/scripts/themestatus.sh",
-        "on-click": "/bin/bash ~/.config/hypr/scripts/toggletheme.sh",
+        "exec": "~/scripts/themestatus.sh",
+        "on-click": "~/scripts/toggletheme.sh",
         "tooltip-format": "Switch Theme",
         "interval": 1
     }

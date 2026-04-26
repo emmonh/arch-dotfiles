@@ -20,5 +20,21 @@
 	<description>Compress selected files into a new .zip file</description>
 	<range>*</range>
 	<patterns>*</patterns>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>emblem-package</icon>
+	<name>Extract ZIP</name>
+	<submenu></submenu>
+	<unique-id>1777181574100164-1</unique-id>
+	<command>7z x %f</command>
+	<description>Extract all files from a .zip</description>
+	<range>*</range>
+	<patterns>*.zip</patterns>
+	<other-files/>
 </action>
 </actions>
