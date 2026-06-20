@@ -9,6 +9,8 @@
 !fish
 !nvim
 !waybar
+!rofi
+!fastfetch
 Thunar/*
 !Thunar/
 !Thunar/uca.xml

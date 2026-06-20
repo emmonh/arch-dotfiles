@@ -1,0 +1,5 @@
+@theme "/usr/share/rofi/themes/fullscreen-preview.rasi"
+
+configuration {
+    modes: [drun,run,window,filebrowser];
+}

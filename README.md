@@ -27,7 +27,7 @@ A LAN cable is the easiest way to get network access but in case that is not pos
 [iwd]# device list
 [iwd]# device <dev_name> show
 [iwd]# device <dev_name> set-property Powered on        # In case the device is powered off
-[iwd]# adapter <dev_adapter> set-property Powered on    
+[iwd]# adapter <dev_adapter> set-property Powered on
 [iwd]# station <dev_name> scan
 [iwd]# station <dev_name> get-networks
 [iwd]# station <dev_name> connect <SSID>
@@ -58,7 +58,7 @@ If got a timed-out error try:
 Basic installation requires **three partitions**:
 
 - Boot (~1 GB)
-- Swap (~4 GB) 
+- Swap (~4 GB)
 - Root (~10 GB)
 
 **Recommended sizes vary based on the desired installation**. To create them, use [**fdisk/cfdisk**](https://wiki.archlinux.org/title/Fdisk).
@@ -92,11 +92,11 @@ Mirrors can be choosen in `/etc/pacman.d/mirrorlist`. It is recommended to check
 
 If there's still signature problems, but a system is needed somehow, set `SigLevel = TrustAll` in `/etc/pacman.conf` for a **temporary** workaround to get going with the starting installation.
 
-To install the programs, `pacstrap` is used. Here's the complete command I run to install the base system packages and my "basic" software (adjust to your preferences and needings): 
+To install the programs, `pacstrap` is used. Here's the complete command I run to install the base system packages and my "basic" software (adjust to your preferences and needings):
 
 ```
-# pacstrap -K /mnt base base linux linux-firmware dbus polkit udisks2 p7zip neovim base-devel git iwd bluez bluez-utils impala grub efibootmgr <amd/intel>-ucode sof-firmware pacman-contrib keyd fish
-``` 
+# pacstrap -K /mnt base base linux linux-firmware dbus polkit udisks2 p7zip neovim base-devel git iwd bluez bluez-utils impala grub efibootmgr <amd/intel>-ucode sof-firmware pacman-contrib keyd fish man
+```
 
 ## System Configuration
 
@@ -104,7 +104,7 @@ To install the programs, `pacstrap` is used. Here's the complete command I run t
 
 ```
 genfstab -U /mnt > /mnt/etc/fstab
-``` 
+```
 
 **Verify** that the result on `/mnt/etc/fstab` contains all of the three partitions created and mounted previously.
 
@@ -180,10 +180,10 @@ Take `wlan0` and `eth0` as example interfaces. Network interfaces can be listed 
 
 ```
 # ip link
-# ip a           # More details         
+# ip a           # More details
 ```
 
-For `systemd-networkd`, in the folder `/etc/systemd/network`, create a `XX-interface.network` file for each network interface you intend to use. The file naming follows this structure because of 1) files being evaluated alphabetically (in case there were different files for one same network interface) and 2) to make the management easier when doing changes. 
+For `systemd-networkd`, in the folder `/etc/systemd/network`, create a `XX-interface.network` file for each network interface you intend to use. The file naming follows this structure because of 1) files being evaluated alphabetically (in case there were different files for one same network interface) and 2) to make the management easier when doing changes.
 For this example, it would be two files named `01-eth0.network` and `02-wlan0.network` with the following content:
 
 ```ini
@@ -191,7 +191,7 @@ For this example, it would be two files named `01-eth0.network` and `02-wlan0.ne
 Name=<interface>
 
 [Network]
-DHCP=yes    
+DHCP=yes
 ```
 
 If you prefer a static IP, the file would look something like this:
@@ -206,7 +206,7 @@ Gateway=192.168.1.1
 DNS=8.8.8.8
 ```
 
-Once the `.network` files have been created, `iwd` must be explicitly configured so it doesn't manage **DHCP** for wireless interfaces since `systemd-networkd` is the tool intended to do so, this can be achieved by editing (or creating if it doesn't exists) the file `/etc/iwd/main.conf` which should look like this: 
+Once the `.network` files have been created, `iwd` must be explicitly configured so it doesn't manage **DHCP** for wireless interfaces since `systemd-networkd` is the tool intended to do so, this can be achieved by editing (or creating if it doesn't exists) the file `/etc/iwd/main.conf` which should look like this:
 
 ```ini
 [General]
@@ -216,7 +216,7 @@ EnableNetworkConfiguration=false
 Now, for `systemd-resolved`, verify that `/etc/resolv.conf` is a symbolic link to `/run/systemd/resolve/stub-resolv.conf` with:
 
 ```
-# ls -l /etc/resolv.conf 
+# ls -l /etc/resolv.conf
 ```
 
 The expected output should look something like this:
@@ -328,13 +328,13 @@ esc = capslock
 To enable remapping, we copy the previous configuration in `/etc/keyd/default.conf` and then we do:
 
 ```
-$ sudo systemctl enable --now keyd 
+$ sudo systemctl enable --now keyd
 ```
 
 If later on another config is applied:
 
 ```
-$ sudo systemctl restart keyd 
+$ sudo systemctl restart keyd
 ```
 
 ### Notification Daemon
@@ -381,10 +381,10 @@ $ sudo pacman -S qt5-wayland qt6-wayland
 
 ### Fonts
 
-A sans-serif font is required to render text. Without one, you may see squares instead of text. A common choice is `noto-fonts`. 
+A sans-serif font is required to render text. Without one, you may see squares instead of text. A common choice is `noto-fonts`.
 
 ```
-$ sudo pacman -S fontconfig noto-fonts noto-fonts-emoji 
+$ sudo pacman -S fontconfig noto-fonts noto-fonts-emoji
 ```
 
 #### [Optional] Japanese I/O
@@ -424,11 +424,11 @@ Must be started by window manager or desktop environment on startup/login.
 My choice for wallpaper is [**awww**](https://codeberg.org/LGFae/awww), this configuration uses [**matugen**](https://github.com/InioX/matugen) to generate the color palette shown on **rofi** and **waybar**
 
 ```
-$ yay -S awww-bin 
+$ yay -S awww-bin
 $ sudo pacman -S matugen
 ```
 
-Daemon `awww-daemotn` must be started by window manager or desktop environment on startup/login.
+Daemon `awww-daemon` must be started by window manager or desktop environment on startup/login.
 
 
 ### App Launcher
@@ -461,7 +461,7 @@ $ sudo pacman -S hyprpicker
 $ yay -S cursor-clip-git
 ```
 
-`cursor-clip --daemon` must be started by window manager or desktop environment on startup/login 
+`cursor-clip --daemon` must be started by window manager or desktop environment on startup/login
 
 ### File Manager
 

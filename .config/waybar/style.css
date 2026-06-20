@@ -80,7 +80,6 @@ button:hover {
 #clock,
 #battery,
 #cpu,
-#custom-theme,
 #memory,
 #disk,
 #temperature,
@@ -113,7 +112,6 @@ button:hover {
 #pulseaudio.muted {
     color: red
 }
-
 
 /* If workspaces is the leftmost module, omit left margin */
 .modules-left > widget:first-child > #workspaces {

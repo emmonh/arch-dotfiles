@@ -11,11 +11,9 @@
         "hyprland/workspaces"
     ],
     "modules-center": [
-        "hyprland/window"
     ],
     "modules-right": [
         "tray",
-        "custom/theme",
         "pulseaudio",
         "network",
         "power-profiles-daemon",
@@ -39,11 +37,6 @@
             "*": [1,2,3,4,5,6]
         }
     },
-    "hyprland/window": {
-        "icon": true,
-        "format": "{title}",
-        "separate-outputs": true
-    },
     "tray": {
         // "icon-size": 21,
         "spacing": 10
@@ -56,7 +49,7 @@
     "clock": {
         // "timezone": "America/New_York",
         "interval": 1,
-        "format": " {:%Y年%m月%d日 (%a) |  %H:%M:%S}",
+        "format": " {:%Y年%m月%d日 (%a) |   %H:%M:%S}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "backlight": {
@@ -106,24 +99,18 @@
         // "scroll-step": 1, // %, can be a float
         "format": "{volume}% {icon} {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": "{volume}% 󰝟 {format_source}",
+        "format-bluetooth-muted": "{volume}% 󰝟  {format_source}",
         "format-muted": "{volume}% 󰝟 {format_source}",
         "format-source": "󰍬",
         "format-source-muted": "",
         "format-icons": {
             "headphone": "",
-            "headset": "󰋎",
+            "headset": "󰋎 ",
             "phone": "",
             "portable": "",
             "car": "",
             "default": ["󰕿", "󰖀", "󰕾"]
         }
-    },
-    "custom/theme": {
-        "exec": "~/scripts/themestatus.sh",
-        "on-click": "~/scripts/toggletheme.sh",
-        "tooltip-format": "Switch Theme",
-        "interval": 1
     }
 //    "custom/power": {
 //        "format" : "⏻ ",

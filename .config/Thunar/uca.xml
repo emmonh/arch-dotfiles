@@ -20,6 +20,7 @@
 	<description>Compress selected files into a new .zip file</description>
 	<range>*</range>
 	<patterns>*</patterns>
+	<directories/>
 	<audio-files/>
 	<image-files/>
 	<other-files/>
