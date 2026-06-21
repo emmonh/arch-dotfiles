@@ -5,12 +5,18 @@
 
 # Except for the files and folders we want to track
 !hypr
+hypr/colors.conf
+hypr/eye_saver_status.txt
 !kitty
+kitty/colors.conf
 !fish
 !nvim
 !waybar
+waybar/colors.css
 !rofi
+rofi/colors.rasi
 !fastfetch
+!matugen
 Thunar/*
 !Thunar/
 !Thunar/uca.xml

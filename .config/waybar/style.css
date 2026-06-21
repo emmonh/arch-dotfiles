@@ -1,3 +1,4 @@
+@import url("colors.css");
 * {
     margin: 2px 1px 1px;
     font-family: "0xProto Nerd Font";
@@ -6,7 +7,7 @@
 
 window#waybar {
     background-color: transparent;
-    color: #ffffff;
+    color: @on_surface;
     font-weight: bolder;
 }
 
@@ -41,13 +42,13 @@ button {
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 button:hover {
     background: inherit;
-    box-shadow: inset 0 -3px #ffffff;
+    box-shadow: inset 0 -3px @on_surface;
 }
 
 #workspaces {
     border-radius: 15px;
     padding: 0 5px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: @surface;
 }
 
 #workspaces button {
@@ -56,20 +57,20 @@ button:hover {
     font-weight: bolder;
     padding: 0 5px;
     background-color: transparent;
-    color: #ffffff;
+    color: @primary;
     transition: background-color .4s, padding .4s;
 }
 
 #workspaces button:hover, #workspaces button.visible {
-    background: rgba(255, 255, 255, 0.2);
+    background: @surface_variant;
     border-radius: 15px;
     box-shadow: none;
 }
 
 #workspaces button.active.hosting-monitor {
     border-radius: 15px;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: @primary;
+    color: @surface;
 }
 
 #mode {
@@ -94,9 +95,9 @@ button:hover {
 #scratchpad,
 #power-profiles-daemon,
 #mpd {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: @surface;
     padding: 0 10px;
-    color: #ffffff;
+    color: @primary;
     border-radius: 15px;
     transition: color .5s;
 }

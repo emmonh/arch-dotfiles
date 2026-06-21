@@ -5,7 +5,12 @@
 
 # Except for the files and folders we want to track
 !README.md
+!arch_setup.md
 !.config
 !.bashrc
-!scripts/
-!rice/
+!scripts
+!rice
+!docs/
+
+# Not the generated ascii art
+rice/shell_ascii_art.txt

@@ -1,0 +1,26 @@
+[config]
+# Automatically reloads apps after regenerating colors (depends on per-app support)
+reload_apps = true
+
+# Color scheme mode: you can change it to "scheme-content", "scheme-expressive", etc.
+# Wallpaper application is handled by scripts/set-wallpaper.sh, not by matugen itself.
+
+[templates.hyprland]
+type = "SchemeFidelity"
+input_path = "~/rice/templates/hyprland_colors.conf"
+output_path = "~/.config/hypr/colors.conf"
+
+[templates.waybar]
+type = "SchemeFidelity"
+input_path = "~/rice/templates/waybar_colors.css"
+output_path = "~/.config/waybar/colors.css"
+
+[templates.rofi]
+type = "SchemeFidelity"
+input_path = "~/rice/templates/rofi_colors.rasi"
+output_path = "~/.config/rofi/colors.rasi"
+
+[templates.kitty]
+type = "SchemeFidelity"
+input_path = "~/rice/templates/kitty_colors.conf"
+output_path = "~/.config/kitty/colors.conf"
