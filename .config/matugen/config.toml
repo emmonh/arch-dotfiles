@@ -3,7 +3,7 @@
 reload_apps = true
 
 # Color scheme mode: you can change it to "scheme-content", "scheme-expressive", etc.
-# Wallpaper application is handled by scripts/set-wallpaper.sh, not by matugen itself.
+# Wallpaper application is handled by scripts/set_wallpaper.sh, not by matugen itself.
 
 [templates.hyprland]
 type = "SchemeFidelity"
