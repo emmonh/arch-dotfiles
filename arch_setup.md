@@ -106,7 +106,7 @@ Mirrors can be chosen in `/etc/pacman.d/mirrorlist`. It is recommended to check 
 
 ```console
 # timedatectl
-# pacman -S archlinux-keyring
+# sudo pacman -S archlinux-keyring
 ```
 
 If there's still signature problems, but a system is needed somehow, set `SigLevel = TrustAll` in `/etc/pacman.conf` for a **temporary** workaround to get going with the starting installation.
@@ -114,7 +114,7 @@ If there's still signature problems, but a system is needed somehow, set `SigLev
 To install the programs, `pacstrap` is used. Here's the complete command I run to install the base system packages and my "basic" software (adjust to your preferences and needs):
 
 ```console
-# pacstrap -K /mnt base linux linux-firmware dbus polkit udisks2 p7zip neovim base-devel git iwd bluez bluez-utils impala grub efibootmgr <amd/intel>-ucode sof-firmware pacman-contrib keyd fish man
+# pacstrap -K /mnt base linux linux-firmware dbus polkit udisks2 p7zip neovim base-devel git iwd bluez bluez-utils impala grub efibootmgr <amd/intel>-ucode sof-firmware pacman-contrib fish man
 ```
 
 ## System Configuration
@@ -331,7 +331,13 @@ If you have Nvidia you might want to check the [**Hyprland-Nvidia page**](https:
 
 ### Input remaps
 
-Very simple change but it's a must if you use **vim** keybinds. We do so via [**keyd**](https://github.com/rvaiya/keyd) so remapping works on both in console and graphical environments since it does kernel-level remapping. The config I use is the following
+Very simple change but it's a must if you use **vim** keybinds. We do so via [**keyd**](https://github.com/rvaiya/keyd) so remapping works on both in console and graphical environments since it does kernel-level remapping.
+
+```console
+$ sudo pacman -S keyd
+```
+
+The config I use is the following
 
 ```ini
 # This file must be placed in /etc/keyd/
@@ -498,7 +504,7 @@ $ sudo pacman -S udiskie iwgtk blueman
 ### System Control and Misc. Utilities
 
 ```console
-$ sudo pacman -S brightnessctl playerctl fastfetch vlc cups cups-pdf usbutils v4l-utils exa bat slurp grim
+$ sudo pacman -S brightnessctl playerctl fastfetch vlc vlc-plugins-all cups cups-pdf usbutils v4l-utils exa bat slurp grim
 ```
 
 ## Status Bar

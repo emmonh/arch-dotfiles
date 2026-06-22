@@ -14,11 +14,16 @@ DISABLE_COMMAND="hyprctl hyprsunset identity"
 COMMANDS=( "$DISABLE_COMMAND" "$ENABLE_COMMAND")
 
 if [[ "$1" == "--help" ]]; then
-    echo "Set eye saver filter on/off based on the value at $STATUS_FILE."
-    echo "Usage: $S0 [OPTIONS]"
-    echo "    -t: Toggle eye saver and update reference file."
-    echo "    --help: Print this menu."
-    exit 0
+cat <<EOF
+Usage: set_eye_saver.sh [OPTIONS]
+
+Set eye saver filter on/off based on the value at $STATUS_FILE
+
+Options:
+    -t: Toggle eye saver and update reference file.
+    --help: Print this menu.
+EOF
+exit 0
 fi
 
 if [[ ! -f $STATUS_FILE ]]; then

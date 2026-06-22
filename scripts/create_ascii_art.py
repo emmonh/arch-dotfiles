@@ -9,7 +9,6 @@ def getParser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="get_ascii_art",
         description="Create an ASCII Art .txt file from an image, ready to use within fastfetch.",
-        epilog="Example: %(prog)s image.jpeg -o art.txt",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 

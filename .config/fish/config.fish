@@ -18,6 +18,7 @@ alias mid "$HOME/.venv/bin/markitdown" # Requires Markitdown at .venv
 alias cmat "cmatrix -b -u 7" # Requires cmatrix-git
 
 alias ff "fastfetch -c '$HOME/.config/fastfetch/config.jsonc'"
+alias ffd "ff --dynamic-interval 1000"
 
 # ==============================
 # Env vars

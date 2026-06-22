@@ -4,16 +4,11 @@
 
 Not all code in this repo is 100% my creation, this setup was heavily inspired by [**binnewbs/arch-hyprland**](https://github.com/binnewbs/arch-hyprland)
 
-<!-- TODO: replace the placeholders below with real screenshots/GIFs -->
-
 ![Desktop overview](docs/assets/desktop.png)
 
-<p align="center">
-  <img src="docs/assets/recolor.gif" alt="Picking a wallpaper recolors the whole desktop" width="49%">
-  <img src="docs/assets/waybar-kitty.png" alt="Waybar and kitty themed by matugen" width="49%">
-</p>
-
 Pick a wallpaper and the entire desktop — Hyprland borders, Waybar, kitty and rofi — recolors itself to match, in a single keystroke. The color palette is generated from the image with [**matugen**](https://github.com/InioX/matugen) following Google's [**Material You**](https://m3.material.io/styles/color/system/overview) color system.
+
+![Re-theming](docs/assets/recolor.gif)
 
 ## Highlights
 
@@ -96,7 +91,9 @@ The script's default output path (`~/rice/shell_ascii_art.txt`) matches that `so
 
 ## Gallery
 
-<!-- TODO: drop a few more shots here (rofi launcher, notifications, different wallpapers/palettes) -->
-
+<!-- TODO: drop a few more shots here (rofi launcher, notifications, different wallpapers/palettes) 
 ![Rofi launcher](docs/assets/rofi.png)
-![A different palette](docs/assets/palette-alt.png)
+-->
+
+![Palette Alt](docs/assets/desktop_1.png)
+![Palette Alt](docs/assets/desktop_2.png)
