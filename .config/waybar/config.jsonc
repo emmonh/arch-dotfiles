@@ -11,6 +11,7 @@
         "hyprland/workspaces"
     ],
     "modules-center": [
+        "custom/player"
     ],
     "modules-right": [
         "tray",
@@ -111,6 +112,11 @@
             "car": "",
             "default": ["󰕿", "󰖀", "󰕾"]
         }
+    },
+    "custom/player": {
+        "exec": "$HOME/scripts/playerctl_state.sh",
+        "format": "{}",
+        "on-click": "playerctl play-pause"
     }
 //    "custom/power": {
 //        "format" : "⏻ ",
