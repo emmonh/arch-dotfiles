@@ -6,15 +6,16 @@ end
 # Aliases
 # ==============================
 # Python venv
-alias py "$HOME/.venv/bin/python"
-alias pip "$HOME/.venv/bin/pip"
+alias pyvenv "python -m venv $HOME/.pyvenv"
+alias py "$HOME/.pyvenv/bin/python"
+alias pip "$HOME/.pyvenv/bin/pip"
 
 # Tools
 alias grep "grep --color=auto"
 alias cat "bat --style=plain --paging=never" # Requires bat
 alias ls "exa --group-directories-first" # Requires exa
 alias tree "exa -T" # Requires exa
-alias mid "$HOME/.venv/bin/markitdown" # Requires Markitdown at .venv
+alias mid "$HOME/.pyvenv/bin/markitdown" # Requires Markitdown at .pyvenv
 alias cmat "cmatrix -b -u 7" # Requires cmatrix-git
 
 alias ff "fastfetch -c '$HOME/.config/fastfetch/config.jsonc'"

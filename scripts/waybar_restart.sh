@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-killall -9 waybar
+killall -s KILL waybar
 
 waybar &

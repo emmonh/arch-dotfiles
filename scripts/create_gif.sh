@@ -4,7 +4,7 @@
 #
 # Example: create_gif.sh input.mp4 -o output.gif -f 15 -w 800
 
-set -e
+set -euo pipefail
 
 usage() {
     cat <<EOF

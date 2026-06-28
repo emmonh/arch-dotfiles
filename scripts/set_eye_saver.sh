@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 DIR="/tmp"
 STATUS_FILE="$DIR/eye_saver_status.txt"
 
-TEMPERATURE=4000
+TEMPERATURE=3000
 
 TOGGLE=0
 DISABLED=0

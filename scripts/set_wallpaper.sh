@@ -2,7 +2,7 @@
 # scripts/set_wallpaper.sh
 # Sets the wallpaper, generates the color palette with matugen, and reloads affected apps
 
-set -e
+set -euo pipefail
 
 WALLPAPER="$1"
 
