@@ -33,4 +33,8 @@ for socket in /tmp/kitty-*; do
     kitty @ --to "unix:$socket" set-colors -a -c ~/.config/kitty/colors.conf 2>/dev/null || true
 done
 
+echo "Reloading cava..."
+# cava reloads its config file on SIGUSR1; this updates every running instance at once
+pkill -USR1 -x cava || true
+
 echo "Wallpaper and theme updated ✓"

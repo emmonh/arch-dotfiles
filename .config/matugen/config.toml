@@ -24,3 +24,8 @@ output_path = "~/.config/rofi/colors.rasi"
 type = "SchemeFidelity"
 input_path = "~/rice/templates/kitty_colors.conf"
 output_path = "~/.config/kitty/colors.conf"
+
+[templates.cava]
+type = "SchemeFidelity"
+input_path = "~/rice/templates/cava_colors.conf"
+output_path = "~/.config/cava/themes/colors"
