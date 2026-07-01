@@ -19,6 +19,7 @@ rofi/colors.rasi
 cava/*
 !cava/
 !cava/config
+!cava/colors
 Thunar/*
 !Thunar/
 !Thunar/uca.xml
