@@ -4,22 +4,27 @@
 !.gitmodules
 
 # Except for the files and folders we want to track
-!hypr
-hypr/colors.conf
-!kitty
-kitty/colors.conf
 !fish
 !nvim
-!waybar
-waybar/colors.css
-!rofi
-rofi/colors.rasi
 !fastfetch
 !matugen
+
+!hypr
+hypr/colors.conf
+
+!kitty
+kitty/colors.conf
+
+!waybar
+waybar/colors.css
+
+!rofi
+rofi/colors.rasi
+
 cava/*
 !cava/
 !cava/config
-!cava/colors
+
 Thunar/*
 !Thunar/
 !Thunar/uca.xml
