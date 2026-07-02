@@ -19,9 +19,9 @@
         "network",
         "power-profiles-daemon",
         "backlight",
-        "battery",
-        "battery#bat2",
-        "custom/power"
+        "battery"
+//        "battery#bat2",
+//        "custom/power"
     ],
     "hyprland/workspaces": {
         "move-to-monitor": true,

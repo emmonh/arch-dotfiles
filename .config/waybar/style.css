@@ -127,7 +127,8 @@ button:hover {
 
 /* The script caps output at a fixed character count; a monospace font keeps
    the visor width MOSTLY steady frame to frame since wobbling still occurs
-   with some chars (idgaf)*/
+   with some chars but it doesnt matter since I aint lookin
+   at the bar 24/7 lol*/
 #custom-player {
     min-width: 240px;
     font-family: "0xProto Nerd Font", monospace;

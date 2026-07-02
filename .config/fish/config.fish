@@ -17,7 +17,7 @@ alias ls "exa --group-directories-first" # Requires exa
 alias tree "exa -T" # Requires exa
 alias mid "$HOME/.pyvenv/bin/markitdown" # Requires Markitdown at .pyvenv
 alias cmat "cmatrix -b -u 7" # Requires cmatrix-git
-
+alias hdrm "$HOME/.pyvenv/bin/headroom" # Requires headroom at .pyvenv
 alias ff "fastfetch -c '$HOME/.config/fastfetch/config.jsonc'"
 alias ffd "ff --dynamic-interval 1000"
 
