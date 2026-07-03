@@ -1,321 +1,93 @@
 {
-  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
-  "logo": {
-    "type": "auto",
-    "source": "/home/user/rice/shell_ascii_art.txt",
-    "color": {
-      "1": "",
-      "2": "",
-      "3": "",
-      "4": "",
-      "5": "",
-      "6": "",
-      "7": "",
-      "8": "",
-      "9": ""
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "type": "file",
+        "source": "~/rice/shell_ascii_art.txt",
+        "width": 28,
+        "height": 12
     },
-    "width": null,
-    "height": null,
-    "padding": {
-      "top": 0,
-      "left": 0,
-      "right": 4
+    "display": {
+        "separator": "  ",
+        "constants": [
+            "─────────────────" // {$1}, used in Custom module
+        ],
+        "key": {
+            "type": "icon",
+            "paddingLeft": 2
+        }
     },
-    "printRemaining": true,
-    "preserveAspectRatio": false,
-    "recache": false,
-    "position": "left",
-    "chafa": {
-      "fgOnly": false,
-      "symbols": "block+border+space-wide-inverted"
-    }
-  },
-  "display": {
-    "stat": false,
-    "pipe": false,
-    "showErrors": false,
-    "disableLinewrap": true,
-    "hideCursor": false,
-    "separator": ": ",
-    "color": {
-      "keys": "",
-      "title": "",
-      "output": "",
-      "separator": ""
-    },
-    "brightColor": true,
-    "duration": {
-      "abbreviation": false,
-      "spaceBeforeUnit": "default"
-    },
-    "size": {
-      "maxPrefix": "YB",
-      "binaryPrefix": "iec",
-      "ndigits": 2,
-      "spaceBeforeUnit": "default"
-    },
-    "temp": {
-      "unit": "D",
-      "ndigits": 1,
-      "color": {
-        "green": "32",
-        "yellow": "93",
-        "red": "91"
-      },
-      "spaceBeforeUnit": "default"
-    },
-    "percent": {
-      "type": [
-        "num",
-        "num-color"
-      ],
-      "ndigits": 0,
-      "color": {
-        "green": "32",
-        "yellow": "93",
-        "red": "91"
-      },
-      "spaceBeforeUnit": "default",
-      "width": 0
-    },
-    "bar": {
-      "char": {
-        "elapsed": "■",
-        "total": "-"
-      },
-      "border": {
-        "left": "[ ",
-        "right": " ]",
-        "leftElapsed": "",
-        "rightElapsed": ""
-      },
-      "color": {
-        "elapsed": "auto",
-        "total": "97",
-        "border": "97"
-      },
-      "width": 10
-    },
-    "fraction": {
-      "ndigits": 2,
-      "trailingZeros": "default"
-    },
-    "noBuffer": false,
-    "key": {
-      "width": 0,
-      "type": "string",
-      "paddingLeft": 0
-    },
-    "freq": {
-      "ndigits": 2,
-      "spaceBeforeUnit": "default"
-    },
-    "constants": []
-  },
-  "general": {
-    "thread": true,
-    "processingTimeout": 5000,
-    "detectVersion": true,
-    "playerName": "",
-    "dsForceDrm": false
-  },
-  "modules": [
-    {
-      "type": "title",
-      "key": " ",
-      "keyIcon": "",
-      "fqdn": false,
-      "color": {
-        "user": "",
-        "at": "",
-        "host": ""
-      }
-    },
-    {
-      "type": "separator",
-      "string": "-",
-      "outputColor": "",
-      "times": 0
-    },
-    {
-      "type": "os",
-      "keyIcon": ""
-    },
-    {
-      "type": "host",
-      "keyIcon": "󰌢"
-    },
-    {
-      "type": "kernel",
-      "keyIcon": ""
-    },
-    {
-      "type": "uptime",
-      "keyIcon": ""
-    },
-    {
-      "type": "packages",
-      "keyIcon": "󰏖",
-      "disabled": [
-        "apk"
-      ],
-      "combined": false
-    },
-    {
-      "type": "shell",
-      "keyIcon": ""
-    },
-    {
-      "type": "display",
-      "keyIcon": "󰍹",
-      "compactType": "none",
-      "preciseRefreshRate": false,
-      "order": null
-    },
-    {
-      "type": "de",
-      "keyIcon": ""
-    },
-    {
-      "type": "wm",
-      "keyIcon": "",
-      "detectPlugin": true
-    },
-    {
-      "type": "wmtheme",
-      "keyIcon": "󰓸"
-    },
-    {
-      "type": "theme",
-      "keyIcon": "󰉼"
-    },
-    {
-      "type": "icons",
-      "keyIcon": ""
-    },
-    {
-      "type": "font",
-      "keyIcon": ""
-    },
-    {
-      "type": "cursor",
-      "keyIcon": "󰆿"
-    },
-    {
-      "type": "terminal",
-      "keyIcon": ""
-    },
-    {
-      "type": "terminalfont",
-      "keyIcon": ""
-    },
-    {
-      "type": "cpu",
-      "keyIcon": "",
-      "temp": false,
-      "showPeCoreCount": false,
-      "tempSensor": ""
-    },
-    {
-      "type": "gpu",
-      "keyIcon": "󰾲",
-      "driverSpecific": false,
-      "detectionMethod": "pci",
-      "temp": false,
-      "hideType": "none",
-      "percent": {
-        "green": 50,
-        "yellow": 80,
-        "type": 0
-      }
-    },
-    {
-      "type": "memory",
-      "keyIcon": "",
-      "percent": {
-        "green": 50,
-        "yellow": 80,
-        "type": 0
-      }
-    },
-    {
-      "type": "swap",
-      "percent": {
-        "green": 50,
-        "yellow": 80,
-        "type": 0
-      },
-      "keyIcon": "󰓡",
-      "separate": false
-    },
-    {
-      "type": "disk",
-      "keyIcon": "",
-      "showRegular": true,
-      "showExternal": true,
-      "showHidden": false,
-      "showSubvolumes": false,
-      "showReadOnly": true,
-      "showUnknown": false,
-      "folders": "",
-      "hideFolders": "/efi:/boot:/boot/*",
-      "hideFS": "",
-      "useAvailable": false,
-      "percent": {
-        "green": 50,
-        "yellow": 80,
-        "type": 0
-      }
-    },
-    {
-      "type": "localip",
-      "keyIcon": "󰩟",
-      "showIpv4": true,
-      "showIpv6": false,
-      "showMac": false,
-      "showLoop": false,
-      "showPrefixLen": true,
-      "showMtu": false,
-      "showSpeed": false,
-      "showFlags": false,
-      "compact": false,
-      "defaultRouteOnly": true,
-      "showAllIps": false,
-      "namePrefix": ""
-    },
-    {
-      "type": "battery",
-      "keyIcon": "",
-      "temp": false,
-      "percent": {
-        "green": 50,
-        "yellow": 20,
-        "type": 0
-      }
-    },
-    {
-      "type": "poweradapter",
-      "keyIcon": "󰚥"
-    },
-    {
-      "type": "locale",
-      "keyIcon": ""
-    },
-    "break",
-    {
-      "type": "colors",
-      "key": " ",
-      "keyIcon": "",
-      "symbol": "block",
-      "paddingLeft": 0,
-      "block": {
-        "width": 3,
-        "range": [
-          0,
-          15
-        ]
-      },
-      "brightness": "default"
-    }
-  ]
+    "modules": [
+        {
+            "type": "custom", // HardwareStart
+            // {#1} is equivalent to `\u001b[1m`. {#} is equivalent to `\u001b[m`
+            "format": "┌{$1} {#1}Hardware Information{#} {$1}┐"
+        },
+        "host",
+        {
+            "type": "cpu",
+            "temp": true,
+            "format": "{name} ({temperature})"
+        },
+        {
+            "type": "gpu",
+            "temp": true,
+            "format": "{vendor} {name} {?temperature}({temperature}){?}"
+        },
+        "disk",
+        "memory",
+        "swap",
+//        "display",
+//        "brightness",
+        "battery",
+        "poweradapter",
+//        "bluetooth",
+//        "sound",
+//        "gamepad",
+        {
+            "type": "custom", // SoftwareStart
+            "format": "├{$1} {#1}Software Information{#} {$1}┤"
+        },
+        {
+            "type": "title",
+            "keyIcon": "",
+            "key": "Title", // Title module has no key by default, so that icon is not displayed
+            "format": "{user-name}@{host-name}"
+        },
+        "os",
+//        "kernel",
+//        "lm",
+//        "de",
+//        "wm",
+        "shell",
+//        "terminal",
+//        "terminalfont",
+//        "theme",
+//        "icons",
+//        "wallpaper",
+//        "packages",
+//        "uptime",
+//        "media",
+        {
+            "type": "localip",
+            "compact": true
+        },
+//        {
+//            "type": "publicip",
+//            "timeout": 1000
+//        },
+//        {
+//            "type": "wifi",
+//            "format": "{ssid}"
+//        },
+//        "locale",
+        {
+            "type": "custom", // InformationEnd
+            "format": "└{$1}──────────────────────{$1}┘"
+        },
+        {
+            "type": "colors",
+            "paddingLeft": 2,
+            "symbol": "circle"
+        }
+    ]
 }
