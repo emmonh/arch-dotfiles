@@ -17,6 +17,7 @@
         }
     },
     "modules": [
+        "break",
         {
             "type": "custom", // HardwareStart
             // {#1} is equivalent to `\u001b[1m`. {#} is equivalent to `\u001b[m`
