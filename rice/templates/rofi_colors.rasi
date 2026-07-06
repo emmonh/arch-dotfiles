@@ -26,7 +26,7 @@
     on-error:                 {{colors.on_error.default.rgba}};
 
     /* Background & Surface */
-    background:               {{colors.background.default.rgba}};
+    background:               {{colors.background.default.rgba | set_alpha: 0.95}};
     on-background:            {{colors.on_background.default.rgba}};
     surface:                  {{colors.surface.default.rgba}};
     on-surface:               {{colors.on_surface.default.rgba}};
@@ -38,12 +38,4 @@
     outline-variant:          {{colors.outline_variant.default.rgba}};
     shadow:                   {{colors.shadow.default.rgba}};
     scrim:                    {{colors.scrim.default.rgba}};
-
-    background-color: @background;
-    text-color:       @on-surface;
-}
-
-element selected {
-    background-color: @primary;
-    text-color:       @on-primary;
 }
