@@ -95,5 +95,6 @@ The script's default output path (`~/rice/shell_ascii_art.txt`) matches that `so
 ![Rofi launcher](docs/assets/rofi.png)
 -->
 
-![Palette Alt](docs/assets/desktop_1.png)
-![Palette Alt](docs/assets/desktop_2.png)
+![Palette Alt 1](docs/assets/desktop_1.png)
+![Palette Alt 2](docs/assets/desktop_2.png)
+![Palette Alt 3](docs/assets/desktop_3.png)
