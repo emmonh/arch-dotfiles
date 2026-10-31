@@ -2,7 +2,7 @@
 
 > A personal Hyprland setup on Arch Linux with dynamic **Material You** theming generated from the wallpaper and applied system-wide.
 
-Not all code in this repo is 100% my creation, this setup was heavily inspired by [**binnewbs/arch-hyprland**](https://github.com/binnewbs/arch-hyprland)
+Not all code in this repo is my creation, this setup was heavily inspired by [**binnewbs/arch-hyprland**](https://github.com/binnewbs/arch-hyprland)
 
 ![Desktop overview](docs/assets/desktop.png)
 
